@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+bs4 = "*"
+requests = "*"
+fastapi = {extras = ["all"], version = "*"}
+sqlalchemy = "*"
+alembic = "*"
+uvicorn = "*"
+python-dotenv = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.7"
