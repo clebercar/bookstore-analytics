@@ -6,11 +6,14 @@ name = "pypi"
 [packages]
 bs4 = "*"
 requests = "*"
-fastapi = {extras = ["all"], version = "*"}
 sqlalchemy = "*"
 alembic = "*"
-uvicorn = "*"
 python-dotenv = "*"
+flask = "*"
+flask-cors = "*"
+black = "*"
+isort = "*"
+pylint = "*"
 
 [dev-packages]
 
