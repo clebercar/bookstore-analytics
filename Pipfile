@@ -14,8 +14,13 @@ flask-cors = "*"
 black = "*"
 isort = "*"
 pylint = "*"
+pandas = "*"
+scikit-learn = "*"
+matplotlib = "*"
+joblib = "*"
 
 [dev-packages]
+ipykernel = "*"
 
 [requires]
 python_version = "3.12"

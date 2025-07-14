@@ -59,3 +59,38 @@ class BooksRepository(BooksRepositoryInterface):
                 .all()
             )
             return [book.to_dict() for book in books]
+
+    def get_books_features(self) -> list[dict]:
+        with self.__db_connection as db:
+            books = (
+                db.session.query(Book.price, Category.name.label("category_name"))
+                .join(Category, Book.category_id == Category.id)
+                .all()
+            )
+
+            return [
+                {
+                    "price": book.price,
+                    "category": book.category_name,
+                }
+                for book in books
+            ]
+
+    def get_training_data(self) -> list[dict]:
+        with self.__db_connection as db:
+            books = (
+                db.session.query(
+                    Book.price, Book.stars, Category.name.label("category_name")
+                )
+                .join(Category, Book.category_id == Category.id)
+                .all()
+            )
+
+            return [
+                {
+                    "price": book.price,
+                    "category": book.category_name,
+                    "stars": book.stars,
+                }
+                for book in books
+            ]

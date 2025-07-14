@@ -48,7 +48,7 @@ def parse_book(book_element):
         "availability": availability,
         "stars": numeric_stars,
         "image_url": image_url,
-        "category": category,
+        "category": category.lower(),
     }
 
 
