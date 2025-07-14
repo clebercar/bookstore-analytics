@@ -1,6 +1,7 @@
 from collections import Counter
 from statistics import mean
 
+from flasgger import swag_from
 from flask import Blueprint, jsonify
 
 from src.db.connection import db_connection_handler
@@ -11,7 +12,43 @@ insights_controller = Blueprint("insights_controller", __name__)
 
 
 @insights_controller.route("/api/v1/stats/overview", methods=["GET"])
+@swag_from(
+    {
+        "tags": ["insights"],
+        "summary": "Get overview statistics",
+        "description": "Returns general statistics about all books including total count, average price, and ratings distribution.",
+        "responses": {
+            200: {
+                "description": "Overview statistics",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "total_books": {
+                            "type": "integer",
+                            "description": "Total number of books",
+                        },
+                        "average_price": {
+                            "type": "number",
+                            "description": "Average price of all books",
+                        },
+                        "ratings_distribution": {
+                            "type": "object",
+                            "description": "Distribution of ratings (1-5 stars)",
+                            "additionalProperties": {"type": "integer"},
+                        },
+                    },
+                },
+            },
+            500: {"description": "Internal Server Error"},
+        },
+    }
+)
 def stats_overview():
+    """
+    Get overview statistics
+
+    Returns general statistics about all books including total count, average price, and ratings distribution.
+    """
     books_repository = BooksRepository(db_connection_handler)
     books = books_repository.list_books()
 
@@ -44,7 +81,47 @@ def stats_overview():
 
 
 @insights_controller.route("/api/v1/stats/categories", methods=["GET"])
+@swag_from(
+    {
+        "tags": ["insights"],
+        "summary": "Get category statistics",
+        "description": "Returns detailed statistics for each category including book count and price statistics.",
+        "responses": {
+            200: {
+                "description": "Category statistics",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "categories": {
+                            "type": "object",
+                            "description": "Statistics for each category",
+                            "additionalProperties": {
+                                "type": "object",
+                                "properties": {
+                                    "number_of_books": {"type": "integer"},
+                                    "average_price": {"type": "number"},
+                                    "min_price": {"type": "number"},
+                                    "max_price": {"type": "number"},
+                                },
+                            },
+                        },
+                        "total_categories": {
+                            "type": "integer",
+                            "description": "Total number of categories",
+                        },
+                    },
+                },
+            },
+            500: {"description": "Internal Server Error"},
+        },
+    }
+)
 def stats_categories():
+    """
+    Get category statistics
+
+    Returns detailed statistics for each category including book count and price statistics.
+    """
     books_repository = BooksRepository(db_connection_handler)
     categories_repository = CategoriesRepository(db_connection_handler)
 

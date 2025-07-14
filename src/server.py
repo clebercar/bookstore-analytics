@@ -1,3 +1,4 @@
+from flasgger import Swagger
 from flask import Flask
 from flask_cors import CORS
 
@@ -11,6 +12,45 @@ db_connection_handler.connect_to_db()
 
 app = Flask(__name__)
 CORS(app)
+
+# Configure Swagger documentation
+swagger_config = {
+    "headers": [],
+    "specs": [
+        {
+            "endpoint": "swagger",
+            "route": "/swagger.json",
+            "rule_filter": lambda rule: True,
+            "model_filter": lambda tag: True,
+        }
+    ],
+    "static_url_path": "/flasgger_static",
+    "swagger_ui": True,
+    "specs_route": "/docs",
+}
+
+swagger_template = {
+    "swagger": "2.0",
+    "info": {
+        "title": "Book Recommendation API",
+        "description": "A comprehensive API for book management, insights, and machine learning predictions",
+        "version": "1.0.0",
+        "contact": {"name": "API Support", "email": "support@example.com"},
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "tags": [
+        {"name": "health", "description": "Health check operations"},
+        {"name": "books", "description": "Book management operations"},
+        {"name": "insights", "description": "Analytics and insights operations"},
+        {"name": "ml", "description": "Machine learning operations"},
+    ],
+}
+
+swagger = Swagger(app, config=swagger_config, template=swagger_template)
 
 app.register_blueprint(books_controller)
 app.register_blueprint(health_controller)
