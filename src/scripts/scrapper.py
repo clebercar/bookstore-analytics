@@ -1,4 +1,5 @@
 import csv
+import os
 
 import requests
 from bs4 import BeautifulSoup
@@ -80,12 +81,19 @@ def scrap_all_books():
 
 
 def save_to_csv(books, filename="books.csv"):
-    with open(filename, "w", newline="", encoding="utf-8") as f:
+    # Create the ml directory if it doesn't exist
+    ml_dir = os.path.join(os.path.dirname(__file__), "..", "ml")
+    os.makedirs(ml_dir, exist_ok=True)
+
+    # Save the CSV file in the ml directory
+    filepath = os.path.join(ml_dir, filename)
+
+    with open(filepath, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=books[0].keys())
         writer.writeheader()
         writer.writerows(books)
 
-    print(f"Scraped {len(books)} books and saved to 'books.csv'.")
+    print(f"Scraped {len(books)} books and saved to '{filepath}'.")
 
 
 def save_to_db(books):
