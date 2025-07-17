@@ -15,12 +15,11 @@ class CategoriesRepository(CategoriesRepositoryInterface):
             category = (
                 database.session.query(Category).filter(Category.name == name).first()
             )
-            print(f"category exists: {category}")
+
             return category is not None
 
     def save_category(self, name: str):
         with self.__db_connection as database:
-            print(f"saving category: {name}")
             category = Category(name=name)
             database.session.add(category)
             database.session.commit()

@@ -1,16 +1,26 @@
+import os
+
+from dotenv import load_dotenv
 from flasgger import Swagger
 from flask import Flask
 from flask_cors import CORS
 
+from src.controllers.v1.auth_controller import auth_controller
 from src.controllers.v1.books_controller import books_controller
 from src.controllers.v1.health_controller import health_controller
 from src.controllers.v1.insights_controller import insights_controller
 from src.controllers.v1.machine_learning_controller import machine_learning_controller
+from src.controllers.v1.scrapping_controller import scrapping_controller
+from src.controllers.v1.user_controller import user_controller
 from src.db.connection import db_connection_handler
 
-db_connection_handler.connect_to_db()
+load_dotenv()
 
+db_connection_handler.connect_to_db()
 app = Flask(__name__)
+
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+
 CORS(app)
 
 # Configure Swagger documentation
@@ -52,7 +62,10 @@ swagger_template = {
 
 swagger = Swagger(app, config=swagger_config, template=swagger_template)
 
+app.register_blueprint(user_controller)
+app.register_blueprint(auth_controller)
 app.register_blueprint(books_controller)
 app.register_blueprint(health_controller)
 app.register_blueprint(insights_controller)
+app.register_blueprint(scrapping_controller)
 app.register_blueprint(machine_learning_controller)

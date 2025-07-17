@@ -81,19 +81,22 @@ def scrap_all_books():
 
 
 def save_to_csv(books, filename="books.csv"):
-    # Create the ml directory if it doesn't exist
-    ml_dir = os.path.join(os.path.dirname(__file__), "..", "ml")
-    os.makedirs(ml_dir, exist_ok=True)
+    try:
+        # Create the ml directory if it doesn't exist
+        ml_dir = os.path.join(os.path.dirname(__file__), "..", "ml")
+        os.makedirs(ml_dir, exist_ok=True)
 
-    # Save the CSV file in the ml directory
-    filepath = os.path.join(ml_dir, filename)
+        # Save the CSV file in the ml directory
+        filepath = os.path.join(ml_dir, filename)
 
-    with open(filepath, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=books[0].keys())
-        writer.writeheader()
-        writer.writerows(books)
+        with open(filepath, "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=books[0].keys())
+            writer.writeheader()
+            writer.writerows(books)
 
-    print(f"Scraped {len(books)} books and saved to '{filepath}'.")
+        print(f"Scraped {len(books)} books and saved to '{filepath}'.")
+    except Exception as e:
+        print(f"Error on trying to save books in csv: {e}")
 
 
 def save_to_db(books):
@@ -137,10 +140,16 @@ def save_to_db(books):
 
         print(f"Scraped {len(books)} books and saved to database.")
     except Exception as e:
-        print(f"Error on trying to save books: {e}")
+        print(f"Error on trying to save books in db: {e}")
 
 
-if __name__ == "__main__":
+def scrapper():
     books_data = scrap_all_books()
     save_to_csv(books_data)
     save_to_db(books_data)
+
+    print("Scrapping completed")
+
+
+if __name__ == "__main__":
+    scrapper()
