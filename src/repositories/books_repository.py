@@ -94,3 +94,8 @@ class BooksRepository(BooksRepositoryInterface):
                 }
                 for book in books
             ]
+
+    def delete_all_books(self):
+        with self.__db_connection as db:
+            db.session.query(Book).delete()
+            db.session.commit()

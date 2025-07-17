@@ -18,3 +18,7 @@ class BooksRepositoryInterface(ABC):
     @abstractmethod
     def get_books_by_price_range(self, min_price: float, max_price: float):
         pass
+
+    @abstractmethod
+    def delete_all_books(self):
+        pass

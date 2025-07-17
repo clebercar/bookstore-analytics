@@ -103,6 +103,11 @@ def save_to_db(books):
     # Initialize database connection
     db_connection_handler.connect_to_db()
 
+    books_repository = BooksRepository(db_connection_handler)
+    books_repository.delete_all_books()
+
+    print("Deleted all books from database")
+
     category_repository = CategoriesRepository(db_connection_handler)
 
     books_to_save = []
