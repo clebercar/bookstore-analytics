@@ -2,6 +2,7 @@ import os
 from datetime import datetime, timedelta, timezone
 
 import jwt
+from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 from pydantic import BaseModel, EmailStr, ValidationError, constr
 
@@ -22,6 +23,39 @@ def generate_token(user_id: int):
 
 
 @auth_controller.route("/api/v1/auth/login", methods=["POST"])
+@swag_from(
+    {
+        "tags": ["auth"],
+        "summary": "User login",
+        "description": "Authenticate user and return JWT token.",
+        "parameters": [
+            {
+                "name": "body",
+                "in": "body",
+                "required": True,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "email": {"type": "string", "example": "user@example.com"},
+                        "password": {"type": "string", "example": "password123"},
+                    },
+                    "required": ["email", "password"],
+                },
+            }
+        ],
+        "responses": {
+            200: {
+                "description": "JWT token returned",
+                "schema": {
+                    "type": "object",
+                    "properties": {"token": {"type": "string"}},
+                },
+            },
+            400: {"description": "Validation error"},
+            401: {"description": "Authentication failed"},
+        },
+    }
+)
 def auth_login():
     try:
         data = request.get_json()
@@ -57,6 +91,38 @@ def validate_sign_in_data(user_data):
 
 
 @auth_controller.route("/api/v1/auth/refresh", methods=["POST"])
+@swag_from(
+    {
+        "tags": ["auth"],
+        "summary": "Refresh JWT token",
+        "description": "Refresh and return a new JWT token.",
+        "parameters": [
+            {
+                "name": "body",
+                "in": "body",
+                "required": True,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "token": {"type": "string", "example": "<jwt_token>"}
+                    },
+                    "required": ["token"],
+                },
+            }
+        ],
+        "responses": {
+            200: {
+                "description": "New JWT token returned",
+                "schema": {
+                    "type": "object",
+                    "properties": {"token": {"type": "string"}},
+                },
+            },
+            400: {"description": "Token missing or invalid"},
+            403: {"description": "Invalid token"},
+        },
+    }
+)
 def refresh_token():
     try:
         secret_key = os.getenv("SECRET_KEY")
