@@ -12,3 +12,10 @@ class Category(Base):
         String(36), primary_key=True, index=True, default=lambda: str(uuid.uuid4())
     )
     name = Column(String)
+
+    def to_dict(self):
+        """Convert Category object to dictionary for JSON serialization"""
+        return {
+            "id": self.id,
+            "name": self.name,
+        }

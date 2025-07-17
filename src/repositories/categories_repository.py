@@ -8,7 +8,8 @@ class CategoriesRepository(CategoriesRepositoryInterface):
 
     def list_categories(self):
         with self.__db_connection as database:
-            return database.session.query(Category).all()
+            categories = database.session.query(Category).all()
+            return [category.to_dict() for category in categories]
 
     def category_exists_by_name(self, name: str) -> bool:
         with self.__db_connection as database:

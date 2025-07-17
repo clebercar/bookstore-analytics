@@ -79,6 +79,10 @@ Once the server is running, you can access:
 -   `GET /api/v1/books/<id>` - Get book by ID
 -   `GET /api/v1/books/search?title=<title>&category=<category>` - Search books
 
+### Categories
+
+-   `GET /api/v1/categories` - List all categories
+
 ## 📊 Analytics & Insights Endpoints
 
 ### Statistics
@@ -236,6 +240,12 @@ curl -X POST http://localhost:3000/api/v1/ml/predictions \
 
 ```bash
 curl http://localhost:3000/api/v1/stats/overview
+```
+
+### Get categories:
+
+```bash
+curl http://localhost:3000/api/v1/categories
 ```
 
 ## 🎯 Machine Learning Model

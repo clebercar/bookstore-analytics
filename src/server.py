@@ -7,6 +7,7 @@ from flask_cors import CORS
 
 from src.controllers.v1.auth_controller import auth_controller
 from src.controllers.v1.books_controller import books_controller
+from src.controllers.v1.categories_controller import categories_controller
 from src.controllers.v1.health_controller import health_controller
 from src.controllers.v1.insights_controller import insights_controller
 from src.controllers.v1.machine_learning_controller import machine_learning_controller
@@ -68,4 +69,5 @@ app.register_blueprint(books_controller)
 app.register_blueprint(health_controller)
 app.register_blueprint(insights_controller)
 app.register_blueprint(scrapping_controller)
+app.register_blueprint(categories_controller)
 app.register_blueprint(machine_learning_controller)
