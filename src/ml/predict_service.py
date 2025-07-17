@@ -10,6 +10,9 @@ def predict_stars(input_data: dict) -> int:
         price = float(input_data["price"])
         category = input_data["category"].lower()
 
+        if category not in category_encoder.classes_:
+            raise ValueError(f"Category '{category}' not recognized.")
+
         category_encoded = category_encoder.transform([category])[0]
 
         features = np.array([[price, category_encoded]])

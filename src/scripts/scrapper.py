@@ -57,7 +57,7 @@ def scrap_all_books():
     books = []
     page_number = 1
 
-    while page_number < 2:
+    while True:
         url = f"https://books.toscrape.com/catalogue/page-{page_number}.html"
         print(f"Scraping page {page_number}...")
 
