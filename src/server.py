@@ -48,7 +48,11 @@ swagger_template = {
         "version": "1.0.0",
         "contact": {"name": "API Support", "email": "support@example.com"},
     },
-    "host": "localhost:3000",
+    "host": (
+        os.getenv("IS_PRODUCTION")
+        if "localhost:3000"
+        else "https://bookstore-analytics.onrender.com"
+    ),
     "basePath": "/",
     "schemes": ["http"],
     "consumes": ["application/json"],
