@@ -49,12 +49,12 @@ swagger_template = {
         "contact": {"name": "API Support", "email": "support@example.com"},
     },
     "host": (
-        os.getenv("IS_PRODUCTION")
-        if "localhost:3000"
-        else "https://bookstore-analytics.onrender.com"
+        "bookstore-analytics.onrender.com"
+        if os.getenv("IS_PRODUCTION")
+        else "localhost:3000"
     ),
     "basePath": "/",
-    "schemes": ["http"],
+    "schemes": ["https", "http"],
     "consumes": ["application/json"],
     "produces": ["application/json"],
     "tags": [
