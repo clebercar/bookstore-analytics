@@ -28,9 +28,9 @@ class BooksRepository(BooksRepositoryInterface):
         self, title: Optional[str] = None, category: Optional[str] = None
     ) -> list[dict]:
         with self.__db_connection as database:
-            query = database.session.query(Book).join(
-                Category, Book.category_id == Category.id
-            )
+            query = database.session.query(
+                Book, Category.name.label("category_name")
+            ).join(Category, Book.category_id == Category.id)
 
             if title:
                 query = query.filter(Book.title.ilike(f"%{title}%"))
@@ -39,7 +39,10 @@ class BooksRepository(BooksRepositoryInterface):
                 query = query.filter(Category.name.ilike(f"%{category}%"))
 
             books = query.all()
-            return [book.to_dict() for book in books]
+            return [
+                {**book.to_dict(), "category_name": category_name}
+                for book, category_name in books
+            ]
 
     def top_rated_books(self) -> list[dict]:
         with self.__db_connection as database:
