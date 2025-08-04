@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv
 from flasgger import Swagger
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 
 from src.controllers.v1.auth_controller import auth_controller
@@ -66,6 +66,12 @@ swagger_template = {
 }
 
 swagger = Swagger(app, config=swagger_config, template=swagger_template)
+
+
+@app.route("/diagram")
+def diagram():
+    return send_from_directory("..", "app_architecture_diagram.html")
+
 
 app.register_blueprint(user_controller)
 app.register_blueprint(auth_controller)
