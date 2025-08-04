@@ -321,48 +321,91 @@
                 <div id="architecture" class="section">
                     <h2>🏛️ System Architecture</h2>
                     <div class="mermaid">
-                        graph TB Client[Client Applications] WebScraper[Web
-                        Scraper - books.toscrape.com] subgraph FlaskApp["Flask
-                        Application"] Main[main.py] Server[server.py] subgraph
-                        Controllers["Controllers (v1)"]
-                        AuthCtrl[auth_controller.py]
-                        BooksCtrl[books_controller.py]
-                        CategoriesCtrl[categories_controller.py]
-                        HealthCtrl[health_controller.py]
-                        InsightsCtrl[insights_controller.py]
-                        MLCtrl[machine_learning_controller.py]
-                        ScrappingCtrl[scrapping_controller.py]
-                        UserCtrl[user_controller.py] end subgraph
-                        Models["Models"] BookModel[book.py]
-                        CategoryModel[category.py] UserModel[user.py] end
-                        subgraph Repositories["Repositories"]
-                        BooksRepo[books_repository.py]
-                        CategoriesRepo[categories_repository.py]
-                        UserRepo[user_repository.py] end subgraph ML["Machine
-                        Learning"] PredictService[predict_service.py]
-                        ModelTraining[model_training.py] ModelFile[model.joblib]
-                        EncoderFile[category_encoder.joblib] end subgraph
-                        Scripts["Scripts"] Scrapper[scrapper.py] end end
-                        subgraph DatabaseLayer["Database Layer"]
-                        DBConnection[connection.py] Base[base.py]
-                        SQLite[("SQLite Database<br />storage.db")] end subgraph
-                        ExternalServices["External Services"] Swagger[Swagger
-                        Documentation] CORS[CORS Middleware] end Client -->
-                        Server WebScraper --> Scrapper Scrapper --> BooksRepo
-                        Scrapper --> CategoriesRepo Server --> AuthCtrl Server
-                        --> BooksCtrl Server --> CategoriesCtrl Server -->
-                        HealthCtrl Server --> InsightsCtrl Server --> MLCtrl
-                        Server --> ScrappingCtrl Server --> UserCtrl AuthCtrl
-                        --> UserRepo BooksCtrl --> BooksRepo CategoriesCtrl -->
-                        CategoriesRepo InsightsCtrl --> BooksRepo InsightsCtrl
-                        --> CategoriesRepo MLCtrl --> PredictService
-                        ScrappingCtrl --> Scrapper UserCtrl --> UserRepo
-                        BooksRepo --> BookModel CategoriesRepo --> CategoryModel
-                        UserRepo --> UserModel BookModel --> DBConnection
-                        CategoryModel --> DBConnection UserModel -->
-                        DBConnection DBConnection --> SQLite PredictService -->
-                        ModelFile PredictService --> EncoderFile Server -->
-                        Swagger Server --> CORS
+                        graph TB
+                            Client[Client Applications]
+                            WebScraper[Web Scraper - books.toscrape.com]
+                            
+                            subgraph FlaskApp["Flask Application"]
+                                Main[main.py]
+                                Server[server.py]
+                                
+                                subgraph Controllers["Controllers (v1)"]
+                                    AuthCtrl[auth_controller.py]
+                                    BooksCtrl[books_controller.py]
+                                    CategoriesCtrl[categories_controller.py]
+                                    HealthCtrl[health_controller.py]
+                                    InsightsCtrl[insights_controller.py]
+                                    MLCtrl[machine_learning_controller.py]
+                                    ScrappingCtrl[scrapping_controller.py]
+                                    UserCtrl[user_controller.py]
+                                end
+                                
+                                subgraph Models["Models"]
+                                    BookModel[book.py]
+                                    CategoryModel[category.py]
+                                    UserModel[user.py]
+                                end
+                                
+                                subgraph Repositories["Repositories"]
+                                    BooksRepo[books_repository.py]
+                                    CategoriesRepo[categories_repository.py]
+                                    UserRepo[user_repository.py]
+                                end
+                                
+                                subgraph ML["Machine Learning"]
+                                    PredictService[predict_service.py]
+                                    ModelTraining[model_training.py]
+                                    ModelFile[model.joblib]
+                                    EncoderFile[category_encoder.joblib]
+                                end
+                                
+                                subgraph Scripts["Scripts"]
+                                    Scrapper[scrapper.py]
+                                end
+                            end
+                            
+                            subgraph DatabaseLayer["Database Layer"]
+                                DBConnection[connection.py]
+                                Base[base.py]
+                                SQLite[("SQLite Database<br />storage.db")]
+                            end
+                            
+                            subgraph ExternalServices["External Services"]
+                                Swagger[Swagger Documentation]
+                                CORS[CORS Middleware]
+                            end
+                            
+                            Client --> Server
+                            WebScraper --> Scrapper
+                            Scrapper --> BooksRepo
+                            Scrapper --> CategoriesRepo
+                            Server --> AuthCtrl
+                            Server --> BooksCtrl
+                            Server --> CategoriesCtrl
+                            Server --> HealthCtrl
+                            Server --> InsightsCtrl
+                            Server --> MLCtrl
+                            Server --> ScrappingCtrl
+                            Server --> UserCtrl
+                            AuthCtrl --> UserRepo
+                            BooksCtrl --> BooksRepo
+                            CategoriesCtrl --> CategoriesRepo
+                            InsightsCtrl --> BooksRepo
+                            InsightsCtrl --> CategoriesRepo
+                            MLCtrl --> PredictService
+                            ScrappingCtrl --> Scrapper
+                            UserCtrl --> UserRepo
+                            BooksRepo --> BookModel
+                            CategoriesRepo --> CategoryModel
+                            UserRepo --> UserModel
+                            BookModel --> DBConnection
+                            CategoryModel --> DBConnection
+                            UserModel --> DBConnection
+                            DBConnection --> SQLite
+                            PredictService --> ModelFile
+                            PredictService --> EncoderFile
+                            Server --> Swagger
+                            Server --> CORS
                     </div>
                 </div>
 
