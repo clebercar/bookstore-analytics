@@ -188,7 +188,7 @@ tech-challenge/
 
 ### 📐 Architecture Diagram
 
-For a visual representation of the application's architecture, see: [app_architecture_diagram.html](app_architecture_diagram.html)
+For a visual representation of the application's architecture, see: [app_architecture_diagram.html](https://bookstore-analytics.onrender.com/diagram)
 
 ## 🔧 Development
 
