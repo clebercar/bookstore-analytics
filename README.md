@@ -182,8 +182,13 @@ tech-challenge/
 ├── Pipfile.lock              # Locked dependencies
 ├── storage.db                # SQLite database
 ├── FIAP - FASE 1.postman_collection.json  # Postman collection
+├── app_architecture_diagram.html  # Application architecture diagram
 └── README.md                 # This file
 ```
+
+### 📐 Architecture Diagram
+
+For a visual representation of the application's architecture, see: [app_architecture_diagram.html](app_architecture_diagram.html)
 
 ## 🔧 Development
 
