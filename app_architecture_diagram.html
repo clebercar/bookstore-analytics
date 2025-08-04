@@ -499,40 +499,33 @@
                 <div id="endpoints" class="section">
                     <h2>🔗 API Endpoints Structure</h2>
                     <div class="mermaid">
-                        graph LR
-                            subgraph "API Endpoints"
-                                subgraph "Authentication"
-                                    A1[POST /api/v1/users]
-                                    A2[POST /api/v1/auth/login]
-                                    A3[POST /api/v1/auth/refresh]
-                                end
-                                
-                                subgraph "Book Management"
-                                    B1[GET /api/v1/books]
-                                    B2[GET /api/v1/books/<id>]
-                                    B3[GET /api/v1/books/search]
-                                    B4[GET /api/v1/categories]
-                                end
-                                
-                                subgraph "Analytics"
-                                    C1[GET /api/v1/stats/overview]
-                                    C2[GET /api/v1/stats/categories]
-                                end
-                                
-                                subgraph "Machine Learning"
-                                    D1[GET /api/v1/ml/features]
-                                    D2[GET /api/v1/ml/training-data]
-                                    D3[POST /api/v1/ml/predictions]
-                                end
-                                
-                                subgraph "Data Collection"
-                                    E1[POST /api/v1/scrapping/trigger]
-                                end
-                                
-                                subgraph "Health"
-                                    F1[GET /api/v1/health]
-                                end
-                            end
+                        graph LR 
+                            A1[POST /api/v1/users] -->|Auth| AuthGroup
+                            A2[POST /api/v1/auth/login] -->|Auth| AuthGroup
+                            A3[POST /api/v1/auth/refresh] -->|Auth| AuthGroup
+
+                            B1[GET /api/v1/books] -->|Books| BookGroup
+                            B2[GET /api/v1/books/&lt;id&gt;] -->|Books| BookGroup
+                            B3[GET /api/v1/books/search] -->|Books| BookGroup
+                            B4[GET /api/v1/categories] -->|Books| BookGroup
+
+                            C1[GET /api/v1/stats/overview] -->|Analytics| AnalyticsGroup
+                            C2[GET /api/v1/stats/categories] -->|Analytics| AnalyticsGroup
+
+                            D1[GET /api/v1/ml/features] -->|ML| MLGroup
+                            D2[GET /api/v1/ml/training-data] -->|ML| MLGroup
+                            D3[POST /api/v1/ml/predictions] -->|ML| MLGroup
+
+                            E1[POST /api/v1/scrapping/trigger] -->|Scraper| ScraperGroup
+
+                            F1[GET /api/v1/health] -->|Health| HealthGroup
+
+                            style AuthGroup fill:#f39c12,color:#fff
+                            style BookGroup fill:#3498db,color:#fff
+                            style AnalyticsGroup fill:#9b59b6,color:#fff
+                            style MLGroup fill:#2ecc71,color:#fff
+                            style ScraperGroup fill:#e67e22,color:#fff
+                            style HealthGroup fill:#e74c3c,color:#fff
                     </div>
 
                     <h3>📋 Complete API Endpoints</h3>
